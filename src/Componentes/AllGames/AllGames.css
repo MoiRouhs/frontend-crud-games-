@@ -1,0 +1,19 @@
+.title {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.games-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.games-table th, .games-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.games-table th {
+    background-color: #f2f2f2;
+}
