@@ -24,7 +24,7 @@ const GameManagement = () => {
               <br />
               <Link to="/updategame" className="boton">Actualizar un juego</Link>
               <br />
-              <Link to="/updategame" className="boton">Eliminar un juego</Link>
+              <Link to="/deletegame" className="boton">Eliminar un juego</Link>
 
           </div>
 
