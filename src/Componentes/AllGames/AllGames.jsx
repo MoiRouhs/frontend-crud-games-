@@ -5,10 +5,14 @@ const AllGames = () => {
     const [games, setGames] = useState([]);
 
     const getGames = async () => {
-        const response = await fetch("http://localhost:8000/");
-        const gamesJson = await response.json();
-        setGames(gamesJson);
-    };
+        try {
+            const response = await fetch("http://localhost:8000/games"); // Asegúrate de que esta URL sea correcta
+            const gamesJson = await response.json();
+            setGames(gamesJson);
+        } catch (error) {
+            console.error('Error fetching games:', error);
+        }
+    };    
 
         useEffect(() => {
             getGames();
