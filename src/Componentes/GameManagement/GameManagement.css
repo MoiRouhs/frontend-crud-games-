@@ -1,0 +1,88 @@
+body {
+    background-color: #045353;
+    margin: 0;
+    padding: 5px;
+    border: 5px solid rgb(241, 226, 6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 0px; /* Para que ocupe toda la altura de la ventana */
+}
+
+.contenedor {
+    display: flex;
+    flex-direction: column;
+    border: 5px solid rgb(241, 226, 6);
+    margin: 0; /* Asegúrate de que no tenga márgenes */
+    height: 1120px;
+    width: 2350px;
+    max-height: 100vh; /* Limita la altura máxima del contenedor */
+    max-width: 205vh;
+    overflow: auto; /* Agrega scroll si el contenido excede la altura máxima */
+}
+
+.titulo {
+    border: 5px solid rgb(0, 0, 0);
+    /* font: oblique bold 300% cursive;  */
+    color: #fcf7f7;
+    font-weight: bold; /* Estilo de fuente */
+    text-align: center; /* Alineación del texto */
+    margin-bottom: 20px; /* Espacio inferior entre el título y el siguiente elemento */
+    
+}
+
+.titulo h1{
+    font: oblique bold 800% cursive;
+}
+
+.contenedor-cuerpo{
+    display: flex;
+    flex-direction: row;
+    border: 5px solid rgb(226, 7, 7);
+    justify-content: center;
+    padding: 5px;
+    gap: 10px;
+}
+
+.imagen1{
+    border: 5px solid rgb(9, 27, 192);
+    width: 600px;
+    background-image: url("/public/controlnegro.png");
+    background-size: cover;
+    
+}
+.botones {
+    display: flex;
+    flex-direction: column; /* Para que los botones estén en una columna */
+    align-items: center; /* Centra horizontalmente los botones */
+    justify-content: center; /* Centra verticalmente los botones */
+    height: 50vh; /* Para que ocupe toda la altura disponible */
+    border: 5px solid rgb(9, 27, 192); /* Color del borde */
+    width: 550px;
+    
+}
+
+.boton {
+    display: inline-block; /* Asegúrate de que se comporten como botones en línea */
+    border: 5px solid rgb(9, 27, 192); /* Color del borde */
+    background-color: rgb(9, 27, 192); /* Color de fondo */
+    color: white; /* Color del texto */
+    padding: 10px 20px; /* Espacio interno: vertical | horizontal */
+    margin: 10px; /* Espacio alrededor del botón */
+    border-radius: 10px; /* Bordes redondeados */
+    font-size: 30px; /* Tamaño de letra */
+    font-family: 'Arial', sans-serif; /* Tipo de fuente */
+    text-align: center; /* Centra el texto */
+    text-decoration: none; /* Quita el subrayado del enlace */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    transition: background-color 0.3s, transform 0.3s; /* Transiciones suaves */
+    width: 420px;
+}
+
+
+.imagen2{
+    border: 5px solid rgb(9, 27, 192);
+    width: 600px;
+    background-image: url("/public/controlnegro.png");
+    background-size: cover;
+}
