@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
 const UpdateGame = () => {
     const [gameCode, setGameCode] = useState('');
@@ -25,9 +24,10 @@ const UpdateGame = () => {
 
     const fetchGame = async () => {
         try {
-            const response = await axios.get("http://localhost:8000/");
-            setGame(response.data);
-            setForm(response.data);
+            const response = await fetch(`http://localhost:3000/api/game/${gameCode}`);
+            const data = await response.json();
+            setGame(data);
+            setForm(data);
             setIsEditing(true);
         } catch (error) {
             console.error('Error fetching game:', error);
@@ -37,7 +37,13 @@ const UpdateGame = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.put("http://localhost:8000/", form);
+            await fetch(`http://localhost:3000/api/game/${gameCode}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(form),
+            });
             setIsEditing(false);
             setUpdateMessage('¡Juego actualizado correctamente!');
         } catch (error) {
@@ -55,18 +61,18 @@ const UpdateGame = () => {
     return (
         <div>
             <h1>Actualizar juegos</h1>
-            <div>
-                <label htmlFor="gameCode">Código del Juego:</label>
-                <input
-                    type="text"
-                    id="gameCode"
-                    value={gameCode}
-                    onChange={handleGameCodeChange}
-                />
-            </div>
-            <div>
-                <button onClick={fetchGame}>Obtener Juego</button>
-            </div>
+            {!isEditing && (
+                <div>
+                    <label htmlFor="gameCode">Código del Juego:</label>
+                    <input
+                        type="text"
+                        id="gameCode"
+                        value={gameCode}
+                        onChange={handleGameCodeChange}
+                    />
+                    <button onClick={fetchGame}>Obtener Juego</button>
+                </div>
+            )}
 
             {isEditing && game && (
                 <form onSubmit={handleSubmit}>
