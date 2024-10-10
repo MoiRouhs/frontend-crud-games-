@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Create = ({ addGame }) => {
+const AddGame = () => {
     const [code, setCode] = useState('');
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
@@ -9,30 +9,30 @@ const Create = ({ addGame }) => {
     const [numberOfPlayers, setNumberOfPlayers] = useState('');
     const [image, setImage] = useState('');
 
-    const resetForm = () => {
-        setCode('');
-        setName('');
-        setDescription('');
-        setConsole('');
-        setReleaseYear('');
-        setNumberOfPlayers('');
-        setImage('');
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const newGame = { 
-            code, 
-            name, 
-            description, 
-            console, 
-            release_year: releaseYear, 
-            number_of_players: numberOfPlayers, 
-            image 
+        const newGame = {
+            code,
+            name,
+            description,
+            console,
+            release_year: releaseYear,
+            number_of_players: numberOfPlayers,
+            image
+        };
+
+        const resetForm = () => {
+            setCode('');
+            setName('');
+            setDescription('');
+            setConsole('');
+            setReleaseYear('');
+            setNumberOfPlayers('');
+            setImage('');
         };
 
         try {
-            const response = await fetch('http://localhost:8000/games', {
+            const response = await fetch('http://localhost:3000/api/game/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -41,20 +41,18 @@ const Create = ({ addGame }) => {
             });
 
             if (response.ok) {
-                const addedGame = await response.json();
-                addGame(addedGame);
                 resetForm();
             } else {
                 console.error('Error al agregar el juego');
             }
         } catch (error) {
-            console.error('Error de conexión:', error);
+            console.error('Error en la solicitud:', error);
         }
     };
 
     return (
         <>
-            <h1 className="text-red-100">CREAR JUEGO</h1>
+            <h1 className="text-red-100">AGREGAR JUEGO</h1>
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 <input 
                     type="text" 
@@ -111,4 +109,4 @@ const Create = ({ addGame }) => {
     );
 };
 
-export default Create;
+export default AddGame;

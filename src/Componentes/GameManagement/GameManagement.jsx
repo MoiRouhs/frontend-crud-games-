@@ -20,7 +20,7 @@ const GameManagement = () => {
           
               <Link to="/allgames" className="boton">Listar juegos</Link>
               <br />
-              <Link to="/create" className="boton">Crear un juego</Link>
+              <Link to="/addgame" className="boton">Crear un juego</Link>
               <br />
               <Link to="/updategame" className="boton">Actualizar un juego</Link>
               <br />
