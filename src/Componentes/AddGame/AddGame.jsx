@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './AddGame.css';
 
 const AddGame = () => {
     const [code, setCode] = useState('');
@@ -8,6 +10,8 @@ const AddGame = () => {
     const [releaseYear, setReleaseYear] = useState('');
     const [numberOfPlayers, setNumberOfPlayers] = useState('');
     const [image, setImage] = useState('');
+
+    const navigate = useNavigate(); // Asegúrate de definir el hook useNavigate
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -48,6 +52,10 @@ const AddGame = () => {
         } catch (error) {
             console.error('Error en la solicitud:', error);
         }
+    };
+
+    const handleBackClick = () => {
+        navigate('/');
     };
 
     return (
@@ -105,6 +113,9 @@ const AddGame = () => {
                 />
                 <button type="submit">Agregar Juego</button>
             </form>
+            <div>
+                <button onClick={handleBackClick} style={{ marginTop: '10px' }}>Atrás</button>
+            </div>
         </>
     );
 };

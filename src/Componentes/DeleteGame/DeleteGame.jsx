@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './DeleteGame.css';
 
 const DeleteGame = () => {
     const [code, setCode] = useState('');
     const [game, setGame] = useState(null);
+    const navigate = useNavigate(); // Añadido para usar navigate
 
     const fetchGameDetails = async () => {
         try {
@@ -42,6 +45,10 @@ const DeleteGame = () => {
         setCode('');
     };
 
+    const handleBackClick = () => {
+        navigate('/');
+    };
+
     return (
         <div style={{ textAlign: 'center' }}>
             <h1>ELIMINAR JUEGO</h1>
@@ -72,6 +79,7 @@ const DeleteGame = () => {
                     <button onClick={handleCancel} style={{ marginTop: '10px' }}>Cancelar</button>
                 </div>
             )}
+            <button onClick={handleBackClick} style={{ marginTop: '10px' }}>Atrás</button>
         </div>
     );
 };

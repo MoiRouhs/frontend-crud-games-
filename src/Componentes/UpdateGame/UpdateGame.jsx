@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './UpdateGame.css';
 
 const UpdateGame = () => {
     const [gameCode, setGameCode] = useState('');
@@ -13,6 +15,7 @@ const UpdateGame = () => {
         image: ''
     });
     const [updateMessage, setUpdateMessage] = useState('');
+    const navigate = useNavigate(); // Añadido para usar navigate
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -56,6 +59,10 @@ const UpdateGame = () => {
         setIsEditing(false);
         setForm(game);
         setUpdateMessage('');
+    };
+
+    const handleBackClick = () => {
+        navigate('/');
     };
 
     return (
@@ -122,7 +129,7 @@ const UpdateGame = () => {
                     <button type="button" onClick={handleCancel}>Cancelar</button>
                 </form>
             )}
-
+            <button onClick={handleBackClick} className="back-button">Atrás</button>
             {updateMessage && <p>{updateMessage}</p>}
         </div>
     );
