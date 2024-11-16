@@ -41,6 +41,8 @@ const AllGames = () => {
                         <tr key={game.code}>
                             <td>{game.code}</td>
                             <td>{game.name}</td>
+                            <td><a href={`/edit-games?id=${game.id}`}>Editar</a></td>
+                            <td><button data-id={game.id}>Eliminar</button></td>
                         </tr>
                     ))}
                 </tbody>
