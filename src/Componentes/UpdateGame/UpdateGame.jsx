@@ -4,6 +4,16 @@ import './UpdateGame.css';
 
 const UpdateGame = () => {
     const [game, setGame] = useState(null);
+    const [form, setForm] = useState({
+        name: '',
+        description: '',
+        console: '',
+        release_year: '',
+        number_of_players: '',
+        image: ''
+    });
+    const [isEditing, setIsEditing] = useState(false);
+    const [updateMessage, setUpdateMessage] = useState('');
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -17,6 +27,7 @@ const UpdateGame = () => {
             const response = await fetch(`http://localhost:4000/api/game/${id}`);
             const gameJson = await response.json();
             setGame(gameJson.data);
+            setForm(gameJson.data); // Set form with fetched game data
         } catch (error) {
             console.error('Error fetching game details:', error);
         }
@@ -29,6 +40,28 @@ const UpdateGame = () => {
         }
     }, [location]);
 
+    const handleChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await fetch(`http://localhost:4000/api/game/${game.id}`, { // Use game.id for update
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(form),
+            });
+            setIsEditing(false);
+            setUpdateMessage('¡Juego actualizado correctamente!');
+        } catch (error) {
+            console.error('Error updating game:', error);
+            setUpdateMessage('Error al actualizar el juego.');
+        }
+    };
+
     const handleBackClick = () => {
         navigate(-1); 
     };
@@ -37,18 +70,75 @@ const UpdateGame = () => {
 
     return (
         <div>
-            <h2>Detalles del Juego</h2>
-            <p><strong>Código:</strong> {game.code}</p>
-            <p><strong>Nombre:</strong> {game.name}</p>
-            <p><strong>Descripción:</strong> {game.description}</p>
-            <p><strong>Consola:</strong> {game.console}</p>
-            <p><strong>Año de Lanzamiento:</strong> {game.release_year}</p>
-            <p><strong>Número de Jugadores:</strong> {game.number_of_players}</p>
-            <img src={game.image} alt={game.name} />
-            <button onClick={handleBackClick}>Atrás</button>
+            <h1>Actualizar juego</h1>
+
+            {/* Mostrar detalles del juego */}
+            {!isEditing ? (
+                <div>
+                    <p><strong>Código:</strong> {game.code}</p>
+                    <p><strong>Nombre:</strong> {game.name}</p>
+                    <p><strong>Descripción:</strong> {game.description}</p>
+                    <p><strong>Consola:</strong> {game.console}</p>
+                    <p><strong>Año de Lanzamiento:</strong> {game.release_year}</p>
+                    <p><strong>Número de Jugadores:</strong> {game.number_of_players}</p>
+                    <img src={game.image} alt={game.name} />
+                    <button onClick={() => setIsEditing(true)}>Editar</button>
+                </div>
+            ) : (
+                // Formulario para actualizar el juego
+                <form onSubmit={handleSubmit}>
+                    <input
+                        type="text"
+                        name="name"
+                        value={form.name}
+                        onChange={handleChange}
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="description"
+                        value={form.description}
+                        onChange={handleChange}
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="console"
+                        value={form.console}
+                        onChange={handleChange}
+                        required
+                    />
+                    <input
+                        type="text"
+                        name="release_year"
+                        value={form.release_year}
+                        onChange={handleChange}
+                        required
+                    />
+                    <input
+                        type="number"
+                        name="number_of_players"
+                        value={form.number_of_players}
+                        onChange={handleChange}
+                        required
+                    />
+                    {/* El campo de imagen también se puede editar si es necesario */}
+                    <input
+                        type="text"
+                        name="image"
+                        value={form.image}
+                        onChange={handleChange}
+                        required
+                    />
+                    <button type="submit">Actualizar Juego</button>
+                </form>
+            )}
+            
+            <button onClick={handleBackClick} className="back-button">Atrás</button>
+            {updateMessage && <p>{updateMessage}</p>}
         </div>
     );
 };
 
-
 export default UpdateGame;
+
