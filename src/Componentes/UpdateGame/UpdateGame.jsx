@@ -3,8 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './UpdateGame.css';
 
 const UpdateGame = () => {
-    const [game, setGame] = useState(null);
-    const [form, setForm] = useState({
+    let [game, setGame] = useState(null);
+    let [form, setForm] = useState({
         name: '',
         description: '',
         console: '',
@@ -27,7 +27,7 @@ const UpdateGame = () => {
             const response = await fetch(`http://localhost:4000/api/game/${id}`);
             const gameJson = await response.json();
             setGame(gameJson.data);
-            setForm(gameJson.data); // Set form with fetched game data
+            setForm(gameJson.data); 
         } catch (error) {
             console.error('Error fetching game details:', error);
         }
@@ -47,8 +47,8 @@ const UpdateGame = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await fetch(`http://localhost:4000/api/game/${game.id}`, { // Use game.id for update
-                method: 'PUT',
+            await fetch(`http://localhost:4000/api/game/add`, {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -68,11 +68,15 @@ const UpdateGame = () => {
 
     if (!game) return <div>Cargando...</div>;
 
+    game = game[0]
+    if (form[0]) {
+        form = form[0]
+    }
+
     return (
         <div>
             <h1>Actualizar juego</h1>
 
-            {/* Mostrar detalles del juego */}
             {!isEditing ? (
                 <div>
                     <p><strong>Código:</strong> {game.code}</p>
@@ -82,6 +86,7 @@ const UpdateGame = () => {
                     <p><strong>Año de Lanzamiento:</strong> {game.release_year}</p>
                     <p><strong>Número de Jugadores:</strong> {game.number_of_players}</p>
                     <img src={game.image} alt={game.name} />
+                    <br />
                     <button onClick={() => setIsEditing(true)}>Editar</button>
                 </div>
             ) : (
@@ -89,8 +94,16 @@ const UpdateGame = () => {
                 <form onSubmit={handleSubmit}>
                     <input
                         type="text"
+                        name="code"
+                        value={form.code}
+                        onChange={handleChange}
+                        disabled
+                    />
+                    <input
+                        type="text"
                         name="name"
                         value={form.name}
+                        data-value={form.name}
                         onChange={handleChange}
                         required
                     />
@@ -141,4 +154,5 @@ const UpdateGame = () => {
 };
 
 export default UpdateGame;
+
 
