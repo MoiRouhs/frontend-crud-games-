@@ -9,7 +9,7 @@ const AllGames = () => {
 
     const getGames = async () => {
         try {
-            const response = await fetch("http://localhost:3000/api/game/all"); 
+            const response = await fetch("http://localhost:4000/api/game/all"); 
             const gamesJson = await response.json();
             console.log(gamesJson);
             setGames(gamesJson.data);
@@ -24,6 +24,10 @@ const AllGames = () => {
 
     const handleBackClick = () => {
         navigate('/');
+    };
+
+    const handleConsultClick = (id) => {
+        navigate(`/updategame?id=${id}`);
     };
 
     return (
@@ -41,8 +45,7 @@ const AllGames = () => {
                         <tr key={game.code}>
                             <td>{game.code}</td>
                             <td>{game.name}</td>
-                            <td><a href={`/edit-games?id=${game.id}`}>Editar</a></td>
-                            <td><button data-id={game.id}>Eliminar</button></td>
+                            <td><button onClick={() => handleConsultClick(game.id)}>Consultar</button></td>
                         </tr>
                     ))}
                 </tbody>
