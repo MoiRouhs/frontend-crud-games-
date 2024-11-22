@@ -25,9 +25,11 @@ const UpdateGame = () => {
     const fetchGameDetails = async (id) => {
         try {
             const response = await fetch(`http://localhost:4000/api/game/${id}`);
-            const gameJson = await response.json();
-            setGame(gameJson.data);
-            setForm(gameJson.data); 
+            if (response.ok) {
+                const gameJson = await response.json();
+                setGame(gameJson.data);
+                setForm(gameJson.data); 
+            } 
         } catch (error) {
             console.error('Error fetching game details:', error);
         }
@@ -46,21 +48,33 @@ const UpdateGame = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (form.release_year.length < 4 || isNaN(form.release_year)) {
+            setUpdateMessage('El año de lanzamiento debe tener al menos 4 dígitos.');
+            return;
+        }
+
+        form.release_year = Number(form.release_year);
+
         try {
-            await fetch(`http://localhost:4000/api/game/add`, {
+            const response = await fetch(`http://localhost:4000/api/game/add`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(form),
             });
+            if (response.ok) {
             setIsEditing(false);
             setUpdateMessage('¡Juego actualizado correctamente!');
+            fetchGameDetails(form.code); // Recargar los detalles del juego actualizado
+            } else {
+                setUpdateMessage('Error al actualizar el juego.');
+            }
         } catch (error) {
-            console.error('Error updating game:', error);
-            setUpdateMessage('Error al actualizar el juego.');
+            console.error('Error updating game:', error); 
+            setUpdateMessage(`Error al actualizar el juego: ${error.message}`);
         }
-    };
+};
 
     const handleBackClick = () => {
         navigate(-1); 
@@ -68,15 +82,13 @@ const UpdateGame = () => {
 
     if (!game) return <div>Cargando...</div>;
 
-    game = game[0]
-    if (form[0]) {
-        form = form[0]
+    if (Array.isArray(form) && form.length > 0) { 
+        form = form[0]; 
     }
 
     return (
         <div>
-            <h1>Actualizar juego</h1>
-
+            <h1>ACTUALIZAR JUEGO</h1>
             {!isEditing ? (
                 <div>
                     <p><strong>Código:</strong> {game.code}</p>
@@ -103,7 +115,6 @@ const UpdateGame = () => {
                         type="text"
                         name="name"
                         value={form.name}
-                        data-value={form.name}
                         onChange={handleChange}
                         required
                     />
@@ -135,7 +146,6 @@ const UpdateGame = () => {
                         onChange={handleChange}
                         required
                     />
-                    {/* El campo de imagen también se puede editar si es necesario */}
                     <input
                         type="text"
                         name="image"
@@ -154,5 +164,4 @@ const UpdateGame = () => {
 };
 
 export default UpdateGame;
-
 
