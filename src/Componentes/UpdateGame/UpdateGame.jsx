@@ -66,7 +66,10 @@ const UpdateGame = () => {
             if (response.ok) {
             setIsEditing(false);
             setUpdateMessage('¡Juego actualizado correctamente!');
-            fetchGameDetails(form.code); // Recargar los detalles del juego actualizado
+            fetchGameDetails(form.code);
+            setTimeout(() => { 
+                navigate(-1); // Redirigir a la página anterior después de 2 segundos 
+                }, 2000);// Recargar los detalles del juego actualizado
             } else {
                 setUpdateMessage('Error al actualizar el juego.');
             }
