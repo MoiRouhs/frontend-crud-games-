@@ -14,6 +14,7 @@ const UpdateGame = () => {
     });
     const [isEditing, setIsEditing] = useState(false);
     const [updateMessage, setUpdateMessage] = useState('');
+    const [shouldReload, setShouldReload] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -27,20 +28,32 @@ const UpdateGame = () => {
             const response = await fetch(`http://localhost:4000/api/game/${id}`);
             if (response.ok) {
                 const gameJson = await response.json();
-                setGame(gameJson.data);
-                setForm(gameJson.data); 
+                if (gameJson.data && gameJson.data.length > 0) {
+                const gameData = gameJson.data[0];
+                setGame(gameData); 
+                setForm({ 
+                    code: gameData.code,
+                    name: gameData.name, 
+                    description: gameData.description, 
+                    console: gameData.console, 
+                    release_year: gameData.releaseYear, 
+                    number_of_players: gameData.numberOfPlayers, 
+                    image: gameData.image 
+                });  
+                }
             } 
         } catch (error) {
             console.error('Error fetching game details:', error);
         }
-    };
+        };
 
     useEffect(() => {
         const id = getIdFromQuery();
         if (id) {
             fetchGameDetails(id);
+            setShouldReload(false);
         }
-    }, [location]);
+    }, [location, shouldReload]);
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -66,12 +79,7 @@ const UpdateGame = () => {
             if (response.ok) {
             setIsEditing(false);
             setUpdateMessage('¡Juego actualizado correctamente!');
-            fetchGameDetails(form.code);
-            setTimeout(() => { 
-                navigate(-1); // Redirigir a la página anterior después de 2 segundos 
-                }, 2000);// Recargar los detalles del juego actualizado
-            } else {
-                setUpdateMessage('Error al actualizar el juego.');
+            setShouldReload(true);
             }
         } catch (error) {
             console.error('Error updating game:', error); 
@@ -85,9 +93,7 @@ const UpdateGame = () => {
 
     if (!game) return <div>Cargando...</div>;
 
-    if (Array.isArray(form) && form.length > 0) { 
-        form = form[0]; 
-    }
+    
 
     return (
         <div>
@@ -98,8 +104,8 @@ const UpdateGame = () => {
                     <p><strong>Nombre:</strong> {game.name}</p>
                     <p><strong>Descripción:</strong> {game.description}</p>
                     <p><strong>Consola:</strong> {game.console}</p>
-                    <p><strong>Año de Lanzamiento:</strong> {game.release_year}</p>
-                    <p><strong>Número de Jugadores:</strong> {game.number_of_players}</p>
+                    <p><strong>Año de Lanzamiento:</strong> {game.releaseYear}</p>
+                    <p><strong>Número de Jugadores:</strong> {game.numberOfPlayers}</p>
                     <img src={game.image} alt={game.name} />
                     <br />
                     <button onClick={() => setIsEditing(true)}>Editar</button>
@@ -167,4 +173,3 @@ const UpdateGame = () => {
 };
 
 export default UpdateGame;
-
