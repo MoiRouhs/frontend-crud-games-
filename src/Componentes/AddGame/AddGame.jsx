@@ -36,7 +36,7 @@ const AddGame = () => {
         };
 
         try {
-            const response = await fetch('http://localhost:3000/api/game/add', {
+            const response = await fetch('http://localhost:4000/api/game/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
