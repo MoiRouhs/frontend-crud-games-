@@ -148,7 +148,7 @@ const testEditarJuego = async () => {
   }
 
   if(codigo && nombre && descripcion && consola && agno && jugadores){
-    console.log('Test aprobado')
+    console.log('Test  de edición de juego aprobado')
     console.log('Fin del test');
     return true;
   }else{
