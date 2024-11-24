@@ -99,6 +99,7 @@ const testEditarJuego = async () => {
   console.log('Datos de validación:', dataTesting);
   console.log('Datos nueva captura:', dataValidation);
 
+  // Compruebo condiciones del test
   let codigo = true;
   if(dataCapturate['Código'] === dataValidation['Código']){
     console.log('El código es igual: ok')
@@ -147,6 +148,7 @@ const testEditarJuego = async () => {
     jugadores = false;
   }
 
+  // Verifico si el tes fue aprobado o no (Si fue aprobado retorno true de lo contrario false)
   if(codigo && nombre && descripcion && consola && agno && jugadores){
     console.log('Test  de edición de juego aprobado')
     console.log('Fin del test');
@@ -156,9 +158,6 @@ const testEditarJuego = async () => {
     console.log('Fin del test');
     return false;
   }
-  //const randomElementHTML = await page.evaluate(el => el.outerHTML, datos);
-  //console.log('p', randomElementHTML )
-
 };
 
 export default testEditarJuego;
