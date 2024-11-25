@@ -46,15 +46,15 @@ const testRegistrarJuego = async () => {
 
     console.log('Completando formulario...');
     // Completa los campos
-    await page.type('input[placeholder="Código"]', '20001');
-    await page.type('input[placeholder="Nombre"]', 'HALO');
+    await page.type('input[placeholder="Código"]', '20002');
+    await page.type('input[placeholder="Nombre"]', 'HALO-3');
     await page.type(
       'input[placeholder="Descripción"]',
       'Un clásico de plataformas'
     );
     await page.type('input[placeholder="Consola"]', 'xbox');
-    await page.type('input[placeholder="Año de lanzamiento"]', '1985');
-    await page.type('input[placeholder="Número de jugadores"]', '2');
+    await page.type('input[placeholder="Año de lanzamiento"]', '2001');
+    await page.type('input[placeholder="Número de jugadores"]', '6');
     await page.type(
       'input[placeholder="URL de la imagen"]',
       'https://example.com/contra.png'
@@ -114,5 +114,4 @@ const testRegistrarJuego = async () => {
   }
 };
 
-testRegistrarJuego();
 export default testRegistrarJuego;
