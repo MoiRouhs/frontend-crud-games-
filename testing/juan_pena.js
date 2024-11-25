@@ -114,5 +114,4 @@ const testRegistrarJuego = async () => {
   }
 };
 
-testRegistrarJuego();
 export default testRegistrarJuego;
