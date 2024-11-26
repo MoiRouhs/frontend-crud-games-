@@ -47,7 +47,7 @@ body {
 .imagen1{
     border: 5px solid rgb(9, 27, 192);
     width: 600px;
-    background-image: url("/public/controlnegro.png");
+    background-image: url("/controlnegro.png");
     background-size: cover;
     
 }
@@ -83,6 +83,6 @@ body {
 .imagen2{
     border: 5px solid rgb(9, 27, 192);
     width: 600px;
-    background-image: url("/public/controlnegro.png");
+    background-image: url("/controlnegro.png");
     background-size: cover;
 }
