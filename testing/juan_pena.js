@@ -35,7 +35,7 @@ const testRegistrarJuego = async () => {
     await page.goto('http://localhost:5173', { waitUntil: 'networkidle2' });
 
     console.log('Página cargada. Accediendo al formulario de creación...');
-    await page.waitForSelector('a[href="/addgame"]', { visible: true, timeout: 10000 });
+    await page.waitForSelector('a[href="/addgame"]', { visible: true, timeout: 3000 });
     await page.click('a[href="/addgame"]');
 
     console.log('Formulario cargado. Completando campos...');
@@ -52,11 +52,11 @@ const testRegistrarJuego = async () => {
     );
 
     console.log('Enviando formulario...');
-    await page.waitForSelector('button[type="submit"]', { visible: true, timeout: 10000 });
+    await page.waitForSelector('button[type="submit"]', { visible: true, timeout: 3000 });
     await page.click('button[type="submit"]');
 
     console.log('Esperando redirección o carga de la página...');
-    await page.waitForNavigation({ waitUntil: 'networkidle0', timeout: 100000 });
+    await page.waitForNavigation({ waitUntil: 'networkidle0', timeout: 2000 });
     console.log('Página después de redirección:', page.url());
 
     console.log('Esperando mensaje de éxito o error...');
@@ -65,7 +65,7 @@ const testRegistrarJuego = async () => {
 
     try {
       // Esperamos el selector de éxito o error
-      await page.waitForSelector(successSelector, { visible: true, timeout: 30000 });
+      await page.waitForSelector(successSelector, { visible: true, timeout: 3000 });
       const successMessage = await page.evaluate((selector) => {
         const el = document.querySelector(selector);
         return el ? el.textContent : null;
@@ -81,7 +81,7 @@ const testRegistrarJuego = async () => {
 
       // Si no se encontró éxito, revisar el mensaje de error
       try {
-        await page.waitForSelector(errorSelector, { visible: true, timeout: 30000 });
+        await page.waitForSelector(errorSelector, { visible: true, timeout: 3000 });
         const errorMessage = await page.evaluate((selector) => {
           const el = document.querySelector(selector);
           return el ? el.textContent : null;
